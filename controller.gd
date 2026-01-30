@@ -8,21 +8,20 @@ extends CharacterBody3D
 @export var max_zoom = 8
 @export var min_zoom = 3
 
+@onready var camera = $CameraOrigin
+@onready var springarm = $CameraOrigin/SpringArm3D
 	
 func view_orientation(x: float, y: float):
-	var camera = $CameraOrigin
 	var strength_x = deg_to_rad(x * sensitivity)
 	var strength_y = deg_to_rad(y * sensitivity)
 		
-	rotate_y(strength_x)
-		
+	camera.rotate_y(strength_x)
 	camera.rotate_x(strength_y)
 	camera.rotation.x = clamp(camera.rotation.x, -PI/6, PI/6)
+	camera.rotation.z = 0
 
 	
 func zoom(zoom_in_strength: float, zoom_out_strength: float):
-	var springarm = $CameraOrigin/SpringArm3D
-	
 	springarm.spring_length -= zoom_sensitivity * zoom_in_strength
 	springarm.spring_length += zoom_sensitivity * zoom_out_strength
 	
@@ -82,13 +81,18 @@ func _physics_process(delta: float) -> void:
 	
 	jump()
 		
-	var direction = transform.basis * Vector3(
-		input_vector.x, 0, input_vector.y
-	).normalized()
+	var input_dir = Vector3(input_vector.x, 0, input_vector.y)
+		
+	var cam_basis = camera.global_basis
 	
-	if direction and is_on_floor():
-		velocity.x = direction.x * speed
-		velocity.z = direction.z * speed
+	var move_dir = cam_basis * input_dir
+	move_dir.y = 0
+	
+	if move_dir and is_on_floor():
+		$Shape.rotation.y = -atan2(move_dir.x, -move_dir.z)
+		
+		velocity.x = move_dir.x * speed
+		velocity.z = move_dir.z * speed
 	elif is_on_floor():
 		velocity.x = move_toward(velocity.x, 0, speed)
 		velocity.z = move_toward(velocity.z, 0, speed)

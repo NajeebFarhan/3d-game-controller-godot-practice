@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://dyq6ayrwotai4"]
+
+[ext_resource type="Script" uid="uid://cojsv4bdfn3fl" path="res://controller.gd" id="1_4flbx"]
+[ext_resource type="PackedScene" uid="uid://bjm0hbcnli33h" path="res://scenes/gun.tscn" id="2_g2els"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4xowi"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a202f"]
+albedo_color = Color(0.21960784, 0.95686275, 0.6666667, 1)
+
+[node name="Player" type="CharacterBody3D" unique_id=476004456]
+script = ExtResource("1_4flbx")
+speed = 8.0
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1428040731]
+shape = SubResource("CapsuleShape3D_4xowi")
+
+[node name="CameraOrigin" type="Node3D" parent="." unique_id=1544469512]
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraOrigin" unique_id=1426557757]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6539111, 0)
+spring_length = 5.0
+
+[node name="Camera3D" type="Camera3D" parent="CameraOrigin/SpringArm3D" unique_id=300356420]
+
+[node name="Shape" type="Node3D" parent="." unique_id=793244152]
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Shape" unique_id=713335916]
+radius = 0.46191406
+height = 2.0107422
+material = SubResource("StandardMaterial3D_a202f")
+
+[node name="Gun" parent="Shape" unique_id=1027060284 instance=ExtResource("2_g2els")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5763225, 0.2755432, -0.51566494)
