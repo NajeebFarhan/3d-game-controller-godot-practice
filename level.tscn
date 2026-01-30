@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://gg8yyqrkvgae"]
+
+[ext_resource type="Script" uid="uid://cojsv4bdfn3fl" path="res://controller.gd" id="1_u52ul"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4xowi"]
+sky_top_color = Color(0.3915484, 0.66075337, 0.9182966, 1)
+sky_horizon_color = Color(1.1484056, 1.194503, 1.2260144, 1)
+ground_bottom_color = Color(0.54991865, 0.46510345, 0.33360615, 1)
+ground_horizon_color = Color(1.1484056, 1.194503, 1.2260144, 1)
+
+[sub_resource type="Sky" id="Sky_a202f"]
+sky_material = SubResource("ProceduralSkyMaterial_4xowi")
+
+[sub_resource type="Environment" id="Environment_noarx"]
+background_mode = 2
+sky = SubResource("Sky_a202f")
+tonemap_mode = 2
+ssao_enabled = true
+sdfgi_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a202f"]
+albedo_color = Color(0.21960784, 0.95686275, 0.6666667, 1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4xowi"]
+
+[node name="Level" type="Node3D" unique_id=6446319]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1633017053]
+environment = SubResource("Environment_noarx")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=220592926]
+transform = Transform3D(-0.60441935, 0.6338723, -0.48257995, 0.13769844, 0.67975426, 0.72039825, 0.7846762, 0.368972, -0.49813986, 0, 0, 0)
+light_color = Color(0.95368963, 0.86164707, 0.60637236, 1)
+shadow_enabled = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1124245008]
+use_collision = true
+size = Vector3(70, 0.9, 16)
+
+[node name="Node" type="Node" parent="." unique_id=1250174798]
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Node" unique_id=131937097]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 2, 4)
+use_collision = true
+radius = 2.0
+height = 4.0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Node" unique_id=1864529502]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2.9297485, -3)
+use_collision = true
+size = Vector3(4, 4.859497, 7)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Node" unique_id=521283583]
+transform = Transform3D(0.9675683, 0.25260976, 0, -0.25260976, 0.9675683, 0, 0, 0, 1, -22.43472, 0.2044332, -2.824973)
+use_collision = true
+size = Vector3(17.613281, 5, 7)
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." unique_id=1598178332]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.782106, 0)
+script = ExtResource("1_u52ul")
+metadata/_edit_group_ = true
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CharacterBody3D" unique_id=851244680]
+radius = 0.46191406
+height = 2.0107422
+material = SubResource("StandardMaterial3D_a202f")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D" unique_id=1854731130]
+shape = SubResource("CapsuleShape3D_4xowi")
+
+[node name="CameraOrigin" type="Node3D" parent="CharacterBody3D" unique_id=74638379]
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CharacterBody3D/CameraOrigin" unique_id=1748742323]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6539111, 0)
+spring_length = 5.0
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D/CameraOrigin/SpringArm3D" unique_id=1668938078]
