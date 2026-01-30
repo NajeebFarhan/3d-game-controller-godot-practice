@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
-@export var speed = 5.0
-@export var jump_velocity = 4.5
+@export var speed = 6.0
+@export var jump_velocity = 6.0
 
 @export var sensitivity = 1.0
 @export var zoom_sensitivity = 0.3
@@ -9,7 +9,7 @@ extends CharacterBody3D
 @export var min_zoom = 3
 
 	
-func view_orientation(x, y):
+func view_orientation(x: float, y: float):
 	var camera = $CameraOrigin
 	var strength_x = deg_to_rad(x * sensitivity)
 	var strength_y = deg_to_rad(y * sensitivity)
@@ -20,12 +20,11 @@ func view_orientation(x, y):
 	camera.rotation.x = clamp(camera.rotation.x, -PI/6, PI/6)
 
 	
-func zoom():
+func zoom(zoom_in_strength: float, zoom_out_strength: float):
 	var springarm = $CameraOrigin/SpringArm3D
-	if Input.is_action_pressed("zoom_in"):
-		springarm.spring_length -= zoom_sensitivity
-	if Input.is_action_pressed("zoom_out"):
-		springarm.spring_length += zoom_sensitivity
+	
+	springarm.spring_length -= zoom_sensitivity * zoom_in_strength
+	springarm.spring_length += zoom_sensitivity * zoom_out_strength
 	
 	springarm.spring_length = clamp(
 		springarm.spring_length, 
@@ -46,6 +45,11 @@ func _ready():
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		view_orientation(-event.relative.x, -event.relative.y)
+		
+	if event is InputEventMouseButton:
+		var zoom_in = int(event.button_index == MouseButton.MOUSE_BUTTON_WHEEL_UP)
+		var zoom_out = int(event.button_index == MouseButton.MOUSE_BUTTON_WHEEL_DOWN)
+		zoom(zoom_in, zoom_out)
 		
 		
 func _physics_process(delta: float) -> void:
@@ -69,8 +73,12 @@ func _physics_process(delta: float) -> void:
 		"joy_right_y_neg",
 	)
 	
+	
 	view_orientation(-joy_view_vector.x, -joy_view_vector.y)
-	zoom()
+	zoom(
+		Input.get_action_raw_strength("zoom_in"), 
+		Input.get_action_raw_strength("zoom_out"),
+	)
 	
 	jump()
 		
