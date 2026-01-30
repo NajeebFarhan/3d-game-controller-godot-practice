@@ -78,7 +78,11 @@ func _physics_process(delta: float) -> void:
 		input_vector.x, 0, input_vector.y
 	).normalized()
 	
-	velocity.x = direction.x * speed
-	velocity.z = direction.z * speed
-	
+	if direction and is_on_floor():
+		velocity.x = direction.x * speed
+		velocity.z = direction.z * speed
+	elif is_on_floor():
+		velocity.x = move_toward(velocity.x, 0, speed)
+		velocity.z = move_toward(velocity.z, 0, speed)
+		
 	move_and_slide()
