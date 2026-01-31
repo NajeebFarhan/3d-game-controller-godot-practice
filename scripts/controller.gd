@@ -16,10 +16,9 @@ func view_orientation(x: float, y: float):
 	var strength_y = deg_to_rad(y * sensitivity)
 		
 	camera.rotate_y(strength_x)
-	camera.rotate_x(strength_y)
-	camera.rotation.x = clamp(camera.rotation.x, -PI/6, PI/6)
+	camera.rotation.x = clamp(camera.rotation.x + strength_y, -PI/6, PI/6)
 	camera.rotation.z = 0
-
+	
 	
 func zoom(zoom_in_strength: float, zoom_out_strength: float):
 	springarm.spring_length -= zoom_sensitivity * zoom_in_strength
@@ -89,7 +88,7 @@ func _physics_process(delta: float) -> void:
 	move_dir.y = 0
 	
 	if move_dir and is_on_floor():
-		$Shape.rotation.y = -atan2(move_dir.x, -move_dir.z)
+		$Model.rotation.y = -atan2(move_dir.x, -move_dir.z)
 		
 		velocity.x = move_dir.x * speed
 		velocity.z = move_dir.z * speed

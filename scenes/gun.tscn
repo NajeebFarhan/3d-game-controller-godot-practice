@@ -1,7 +1,19 @@
 [gd_scene format=3 uid="uid://bjm0hbcnli33h"]
 
+[ext_resource type="Script" uid="uid://bvitd07uipem5" path="res://scripts/gun.gd" id="1_og67c"]
 [ext_resource type="PackedScene" uid="uid://botdvkn88uh76" path="res://GLB format/blaster-d.glb" id="1_x77fm"]
+[ext_resource type="PackedScene" uid="uid://eeqt3ikob3t3" path="res://scenes/bullet.tscn" id="2_gp1hk"]
 
 [node name="Gun" type="Node3D" unique_id=1027060284]
+script = ExtResource("1_og67c")
+bullet_scn = ExtResource("2_gp1hk")
 
 [node name="blaster-d2" parent="." unique_id=1701877467 instance=ExtResource("1_x77fm")]
+
+[node name="BulletSpawnPoint" type="Marker3D" parent="." unique_id=1964402358]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.057391115, -0.39343148)
+
+[node name="Timer" type="Timer" parent="." unique_id=1547927714]
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -54,11 +54,11 @@ size = Vector3(136.85352, 0.9, 76.359375)
 [node name="Node" type="Node" parent="." unique_id=1250174798]
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="Node" unique_id=131937097]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 2, 4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.119099, 0.76179504, 13.505227)
 material_override = SubResource("StandardMaterial3D_1ainy")
 use_collision = true
-radius = 2.0
-height = 4.0
+radius = 4.4194336
+height = 2.2460938
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Node" unique_id=1864529502]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2.9297485, -3)

@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://eeqt3ikob3t3"]
+
+[ext_resource type="PackedScene" uid="uid://0st7r6xmd5kd" path="res://GLB format/bullet-foam-tip.glb" id="1_mkf8s"]
+[ext_resource type="Script" uid="uid://80oijrg0isby" path="res://scripts/bullet.gd" id="1_y25gk"]
+
+[node name="Bullet" type="Node3D" unique_id=1906928673]
+script = ExtResource("1_y25gk")
+bullet_speed = 20.0
+
+[node name="bullet-foam-tip2" parent="." unique_id=61807172 instance=ExtResource("1_mkf8s")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+
+[node name="DispawnTimer" type="Timer" parent="." unique_id=153557743]
+wait_time = 4.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="DispawnTimer" to="." method="_on_dispawn_timer_timeout"]
