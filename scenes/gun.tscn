@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bvitd07uipem5" path="res://scripts/gun.gd" id="1_og67c"]
 [ext_resource type="PackedScene" uid="uid://botdvkn88uh76" path="res://GLB format/blaster-d.glb" id="1_x77fm"]
 [ext_resource type="PackedScene" uid="uid://eeqt3ikob3t3" path="res://scenes/bullet.tscn" id="2_gp1hk"]
+[ext_resource type="AudioStream" uid="uid://bpk3kc3vu3ck1" path="res://audio/308 Single.wav" id="4_qd4js"]
 
 [node name="Gun" type="Node3D" unique_id=1027060284]
 script = ExtResource("1_og67c")
@@ -15,5 +16,8 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0
 
 [node name="Timer" type="Timer" parent="." unique_id=1547927714]
 autostart = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1419735201]
+stream = ExtResource("4_qd4js")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

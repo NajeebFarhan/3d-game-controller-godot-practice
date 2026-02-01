@@ -10,6 +10,8 @@ extends CharacterBody3D
 
 @onready var camera = $CameraOrigin
 @onready var springarm = $CameraOrigin/SpringArm3D
+
+var is_game_playing = false
 	
 func view_orientation(x: float, y: float):
 	var strength_x = deg_to_rad(x * sensitivity)

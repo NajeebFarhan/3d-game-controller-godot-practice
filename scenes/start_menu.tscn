@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://cio4axyogdqvt"]
+
+[ext_resource type="Script" uid="uid://c6oxoyhkjubgd" path="res://scripts/start_menu.gd" id="1_ouf4f"]
+[ext_resource type="PackedScene" uid="uid://gg8yyqrkvgae" path="res://scenes/level.tscn" id="2_thu50"]
+
+[node name="StartMenu" type="CanvasLayer" unique_id=1360369156]
+script = ExtResource("1_ouf4f")
+game_level = ExtResource("2_thu50")
+
+[node name="Button" type="Button" parent="." unique_id=989565848]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 32
+text = "START"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

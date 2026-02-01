@@ -9,6 +9,7 @@ func _input(event: InputEvent) -> void:
 		var bullet = bullet_scn.instantiate()
 		bullet.position = bullet_spawn_marker.global_position
 		bullet.basis = global_basis
+		
+		$AudioStreamPlayer.play()
 	
-	#get_tree().add_child(bullet)
 		get_tree().current_scene.add_child(bullet)
