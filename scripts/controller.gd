@@ -36,6 +36,26 @@ func zoom(zoom_in_strength: float, zoom_out_strength: float):
 func jump():
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = jump_velocity
+		
+
+func move(input_vector: Vector2):
+	var input_dir = Vector3(input_vector.x, 0, input_vector.y)
+		
+	var cam_basis = camera.global_basis
+	
+	var move_dir = cam_basis * input_dir
+	move_dir.y = 0
+	
+	if move_dir and is_on_floor():
+		$Model.rotation.y = -atan2(move_dir.x, -move_dir.z)
+		
+		velocity.x = move_dir.x * speed
+		velocity.z = move_dir.z * speed
+	elif is_on_floor():
+		velocity.x = move_toward(velocity.x, 0, speed)
+		velocity.z = move_toward(velocity.z, 0, speed)
+		
+	move_and_slide()
 
 
 func _ready():
@@ -82,20 +102,4 @@ func _physics_process(delta: float) -> void:
 	
 	jump()
 		
-	var input_dir = Vector3(input_vector.x, 0, input_vector.y)
-		
-	var cam_basis = camera.global_basis
-	
-	var move_dir = cam_basis * input_dir
-	move_dir.y = 0
-	
-	if move_dir and is_on_floor():
-		$Model.rotation.y = -atan2(move_dir.x, -move_dir.z)
-		
-		velocity.x = move_dir.x * speed
-		velocity.z = move_dir.z * speed
-	elif is_on_floor():
-		velocity.x = move_toward(velocity.x, 0, speed)
-		velocity.z = move_toward(velocity.z, 0, speed)
-		
-	move_and_slide()
+	move(input_vector)
